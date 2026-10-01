@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: todoapp
+  namespace: todoapp
+spec:
+  containers:
+    - name: todoapp
+      image: boomax/todoapp:3.0.0
+      ports:
+        - containerPort: 8080
+      livenessProbe:
+        httpGet:
+          path: /api/health/live/
+          port: 8080
+        initialDelaySeconds: 5
+        periodSeconds: 10
+      readinessProbe:
+        httpGet:
+          path: /api/health/ready/
+          port: 8080
+        initialDelaySeconds: 5
+        periodSeconds: 10
